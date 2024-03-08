@@ -1,4 +1,4 @@
-#!/bin/bash
+23#!/bin/bash
 # shellcheck disable=SC2001,SC1111,SC1112,SC2143,SC2145,SC2086,SC2089,SC2090
 
 ####################################################################################################
@@ -593,7 +593,7 @@ fi'
 welcomeMessage+="\n\n---"
 
 if { [[ "${promptForConfiguration}" == "true" ]] && [[ "${welcomeDialog}" != "messageOnly" ]]; } then
-    welcomeMessage+="  \n\n#### Configurations  \n- **${configurationOneName}:** ${configurationOneDescription}  \n- **${configurationTwoName}:** ${configurationTwoDescription}  \n- **${configurationThreeName}:** ${configurationThreeDescription} \n- **${configurationFourName}:** ${configurationFourDescription} \n- \n- **${configurationFiveName}:** ${configurationFiveDescription}"
+    welcomeMessage+="  \n\n#### Configurations  \n- **${configurationOneName}:** ${configurationOneDescription}  \n- **${configurationTwoName}:** ${configurationTwoDescription}  \n- **${configurationThreeName}:** ${configurationThreeDescription} \n- **${configurationFourName}:** ${configurationFourDescription} \n- **${configurationFiveName}:** ${configurationFiveDescription}"
 else
     welcomeMessage=${welcomeMessage//", select your preferred **Configuration**"/}
 fi
