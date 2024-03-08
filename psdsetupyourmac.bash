@@ -154,28 +154,28 @@ correctionCoefficient="1.01"                # "Fudge factor" (to help estimate m
 configurationCatchAllSize="34"              # Catch-all Configuration in Gibibits (i.e., Total File Size in Gigabytes * 7.451)
 configurationCatchAllInstallBuffer="0"      # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
-configurationOneName="Photo"
-configurationOneDescription="Minimum organization apps"
+configurationOneName="Area"
+configurationOneDescription=""
 configurationOneSize="34"                   # Configuration One in Gibibits (i.e., Total File Size in Gigabytes * 7.451)
 configurationOneInstallBuffer="0"           # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
-configurationTwoName="E Learning"
-configurationTwoDescription="Required apps and Microsoft 365"
+configurationTwoName="Audio Production"
+configurationTwoDescription=""
 configurationTwoSize="62"                   # Configuration Two in Gibibits (i.e., Total File Size in Gigabytes * 7.451) 
 configurationTwoInstallBuffer="0"           # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
-configurationThreeName="Video Laptops"
-configurationThreeDescription="Recommended apps, Adobe Acrobat Reader and Google Chrome"
+configurationThreeName="General Production"
+configurationThreeDescription=""
 configurationThreeSize="106"                # Configuration Three in Gibibits (i.e., Total File Size in Gigabytes * 7.451) 
 configurationThreeInstallBuffer="0"         # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
-configurationFourName="Video Workstations"
-configurationFourDescription="Recommended apps, Adobe Acrobat Reader and Google Chrome"
+configurationFourName="Temple Audio Recording"
+configurationFourDescription=""
 configurationFourSize="106"                # Configuration Three in Gibibits (i.e., Total File Size in Gigabytes * 7.451) 
 configurationFourInstallBuffer="0"         # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
-configurationFiveName="Audio Laptops"
-configurationFiveDescription="Recommended apps, Adobe Acrobat Reader and Google Chrome"
+configurationFiveName="Video Production"
+configurationFiveDescription=""
 configurationFiveSize="106"                # Configuration Three in Gibibits (i.e., Total File Size in Gigabytes * 7.451) 
 configurationFiveInstallBuffer="0"         # Buffer time added to estimates to include installation time of packages, in seconds. Set to 0 to disable. 
 
@@ -500,15 +500,7 @@ dialogCheck
 # Pre-flight Check: Validate `supportTeam` variables are populated
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-if [[ -z $supportTeamName ]]; then
-    updateScriptLog "PRE-FLIGHT CHECK: 'supportTeamName' must be populated to proceed; exiting"
-    exit 1
-fi
 
-if [[ -z $supportTeamPhone && -z $supportTeamEmail && -z $supportKB ]]; then
-    updateScriptLog "PRE-FLIGHT CHECK: At least ONE 'supportTeam' variable must be populated to proceed; exiting"
-    exit 1
-fi
 
 
 
@@ -692,19 +684,11 @@ welcomeVideo="--title \"$welcomeTitle\" \
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Text Fields
-if [ "$prefillUsername" == "true" ]; then usernamePrefil=',"value" : "'${loggedInUser}'"'; fi
-if [ "$prefillRealname" == "true" ]; then realnamePrefil=',"value" : "'${loggedInUserFullname}'"'; fi
-if [ "$promptForUsername" == "true" ]; then usernameJSON='{ "title" : "User Name","required" : false,"prompt" : "User Name"'${usernamePrefil}'},'; fi
-if [ "$promptForRealName" == "true" ]; then realNameJSON='{ "title" : "Full Name","required" : false,"prompt" : "Full Name"'${realnamePrefil}'},'; fi
-if [ "$promptForEmail" == "true" ]; then
-    emailJSON='{   "title" : "E-mail",
-        "required" : true,
-        "prompt" : "E-mail Address",
-        "regex" : "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-        "regexerror" : "Please enter a valid email address."
-    },'
-fi
-if [ "$promptForComputerName" == "true" ]; then compNameJSON='{ "title" : "Computer Name","required" : false,"prompt" : "Computer Name" },'; fi
+#if [ "$prefillUsername" == "true" ]; then usernamePrefil=',"value" : "'${loggedInUser}'"'; fi
+#if [ "$prefillRealname" == "true" ]; then realnamePrefil=',"value" : "'${loggedInUserFullname}'"'; fi
+#if [ "$promptForUsername" == "true" ]; then usernameJSON='{ "title" : "User Name","required" : false,"prompt" : "User Name"'${usernamePrefil}'},'; fi
+#if [ "$promptForRealName" == "true" ]; then realNameJSON='{ "title" : "Full Name","required" : false,"prompt" : "Full Name"'${realnamePrefil}'},'; fi
+
 if [ "$promptForAssetTag" == "true" ]; then
     assetTagJSON='{   "title" : "Asset Tag",
         "required" : false,
@@ -713,61 +697,23 @@ if [ "$promptForAssetTag" == "true" ]; then
         "regexerror" : "Please enter (at least) seven digits for the Asset Tag, optionally preceded by either AP, IP or CD."
     },'
 fi
-if [ "$promptForRoom" == "true" ]; then roomJSON='{ "title" : "Room","required" : false,"prompt" : "Optional" },'; fi
-if [[ "$promptForPosition" == "true" && -z "$positionListRaw" ]]; then positionJSON='{ "title" : "Position","required" : false,"prompt" : "Position" },'; fi
+
 
 textFieldJSON="${usernameJSON}${realNameJSON}${emailJSON}${compNameJSON}${assetTagJSON}${positionJSON}${roomJSON}"
 textFieldJSON=$( echo ${textFieldJSON} | sed 's/,$//' )
 
 # Dropdowns
-if [ "$promptForBuilding" == "true" ]; then
-    if [ -n "$buildingsListRaw" ]; then
-    buildingJSON='{
-            "title" : "Building",
-            "default" : "",
-            "required" : true,
-            "values" : [
-                '${buildingsList}'
-            ]
-        },'
-    fi
-fi
-
-if [ "$promptForDepartment" == "true" ]; then
-    if [ -n "$departmentListRaw" ]; then
-    departmentJSON='{
-            "title" : "Department",
-            "default" : "",
-            "required" : true,
-            "values" : [
-                '${departmentList}'
-            ]
-        },'
-    fi
-fi
-
-if [ "$promptForPosition" == "true" ]; then
-    if [ -n "${positionListRaw}" ]; then
-    positionSelectJSON='{
-            "title" : "Position",
-            "default" : "",
-            "required" : true,
-            "values" : [
-                '${positionList}'
-            ]
-        },'
-    fi
-fi
 
 if [ "$promptForConfiguration" == "true" ] && [ -z "${presetConfiguration}" ]; then
     configurationJSON='{
             "title" : "Configuration",
             "style" : "radio",
-            "default" : "'"${configurationOneName}"'",
+           "default" : "'"${#}}"'", 
             "values" : [
                 "'"${configurationOneName}"'",
                 "'"${configurationTwoName}"'",
-                "'"${configurationThreeName}"'"
+                "'"${configurationThreeName}"'",
+                "'"${configurationFourName}"'"
             ]
         }'
 fi
@@ -986,7 +932,7 @@ function policyJSONConfiguration() {
                         ]
                     },
                     {
-                        "listitem": "CaptureOne",
+                        "listitem": "Sophos Endpoint",
                         "subtitle": "Catches malware without relying on signatures",
                         "icon": "https://ics.services.jamfcloud.com/icon/hash_c70f1acf8c96b99568fec83e165d2a534d111b0510fb561a283d32aa5b01c60c",
                         "progresstext": "You’ll enjoy next-gen protection with Sophos Endpoint which doesn’t rely on signatures to catch malware.",
