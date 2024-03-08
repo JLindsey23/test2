@@ -593,7 +593,7 @@ fi'
 welcomeMessage+="\n\n---"
 
 if { [[ "${promptForConfiguration}" == "true" ]] && [[ "${welcomeDialog}" != "messageOnly" ]]; } then
-    welcomeMessage+="  \n\n#### Configurations  \n- **${configurationOneName}:** ${configurationOneDescription}  \n- **${configurationTwoName}:** ${configurationTwoDescription}  \n- **${configurationThreeName}:** ${configurationThreeDescription} \n- **${configurationFourName}:** ${configurationFourDescription} \n- \n- **${configurationFiveName}:** ${configurationFiveDescription}"
+    welcomeMessage+="  \n\n#### Configurations  \n- **${configurationOneName}:** ${configurationOneDescription}  \n- **${configurationTwoName}:** ${configurationTwoDescription}  \n- **${configurationThreeName}:** ${configurationThreeDescription} \n- **${configurationFourName}:** ${configurationFourDescription} \n- **${configurationFiveName}:** ${configurationFiveDescription}"
 else
     welcomeMessage=${welcomeMessage//", select your preferred **Configuration**"/}
 fi
